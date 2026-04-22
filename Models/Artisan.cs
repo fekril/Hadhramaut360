@@ -9,7 +9,7 @@ namespace Had360back.Models;
 public class Artisan
 {
     [Key]
-    public uint ArtisanId { get; set; }
+    public int ArtisanId { get; set; }
 
     [Required]
     [MaxLength(150)]

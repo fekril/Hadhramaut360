@@ -8,10 +8,10 @@ namespace Had360back.Models;
 public class LandmarkMedia
 {
     [Key]
-    public uint MediaId { get; set; }
+    public int MediaId { get; set; }
 
     [Required]
-    public uint LandmarkId { get; set; }
+    public int LandmarkId { get; set; }
 
     [Required]
     [MaxLength(500)]

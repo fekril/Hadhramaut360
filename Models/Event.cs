@@ -9,10 +9,10 @@ namespace Had360back.Models;
 public class Event
 {
     [Key]
-    public uint EventId { get; set; }
+    public int EventId { get; set; }
 
     [Required]
-    public uint OrgUserId { get; set; }
+    public int OrgUserId { get; set; }
 
     [Required]
     [MaxLength(200)]

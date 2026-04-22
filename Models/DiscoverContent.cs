@@ -8,7 +8,7 @@ namespace Had360back.Models;
 public class DiscoverContent
 {
     [Key]
-    public uint ContentId { get; set; }
+    public int ContentId { get; set; }
 
     [Required]
     [MaxLength(200)]

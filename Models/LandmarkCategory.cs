@@ -6,11 +6,13 @@ namespace Had360back.Models;
 [Table("landmark_categories")]
 public class LandmarkCategory
 {
+    [Key]
+    public int Id { get; set; }
     [Required]
-    public uint LandmarkId { get; set; }
+    public int LandmarkId { get; set; }
 
     [Required]
-    public uint CategoryId { get; set; }
+    public int CategoryId { get; set; }
 
     // Navigation properties
     [ForeignKey(nameof(LandmarkId))]

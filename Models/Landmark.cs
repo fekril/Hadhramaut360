@@ -9,7 +9,7 @@ namespace Had360back.Models;
 public class Landmark
 {
     [Key]
-    public uint LandmarkId { get; set; }
+    public int LandmarkId { get; set; }
 
     [Required]
     [MaxLength(200)]

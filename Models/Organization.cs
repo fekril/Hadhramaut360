@@ -9,7 +9,7 @@ namespace Had360back.Models;
 public class Organization
 {
     [Key]
-    public uint UserId { get; set; }
+    public int UserId { get; set; }
 
     [Required]
     [MaxLength(150)]

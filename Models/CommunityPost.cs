@@ -9,10 +9,10 @@ namespace Had360back.Models;
 public class CommunityPost
 {
     [Key]
-    public uint PostId { get; set; }
+    public int PostId { get; set; }
 
     [Required]
-    public uint UserId { get; set; }
+    public int UserId { get; set; }
 
     [Required]
     public string ContentText { get; set; } = null!;

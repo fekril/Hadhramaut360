@@ -8,10 +8,10 @@ namespace Had360back.Models;
 public class EventMedia
 {
     [Key]
-    public uint MediaId { get; set; }
+    public int MediaId { get; set; }
 
     [Required]
-    public uint EventId { get; set; }
+    public int EventId { get; set; }
 
     [Required]
     [MaxLength(500)]

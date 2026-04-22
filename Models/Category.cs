@@ -9,7 +9,7 @@ namespace Had360back.Models;
 public class Category
 {
     [Key]
-    public uint CategoryId { get; set; }
+    public int CategoryId { get; set; }
 
     [Required]
     [MaxLength(100)]

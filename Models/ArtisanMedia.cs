@@ -8,10 +8,10 @@ namespace Had360back.Models;
 public class ArtisanMedia
 {
     [Key]
-    public uint MediaId { get; set; }
+    public int MediaId { get; set; }
 
     [Required]
-    public uint ArtisanId { get; set; }
+    public int ArtisanId { get; set; }
 
     [Required]
     [MaxLength(500)]

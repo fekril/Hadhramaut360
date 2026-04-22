@@ -8,13 +8,13 @@ namespace Had360back.Models;
 public class Report
 {
     [Key]
-    public uint ReportId { get; set; }
+    public int ReportId { get; set; }
 
     [Required]
-    public uint UserId { get; set; }
+    public int UserId { get; set; }
 
     [Required]
-    public uint PostId { get; set; }
+    public int PostId { get; set; }
 
     [Required]
     public string Reason { get; set; } = null!;

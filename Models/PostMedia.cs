@@ -8,10 +8,10 @@ namespace Had360back.Models;
 public class PostMedia
 {
     [Key]
-    public uint MediaId { get; set; }
+    public int MediaId { get; set; }
 
     [Required]
-    public uint PostId { get; set; }
+    public int PostId { get; set; }
 
     [Required]
     [MaxLength(500)]

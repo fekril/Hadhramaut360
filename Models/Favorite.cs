@@ -7,11 +7,13 @@ namespace Had360back.Models;
 [Table("favorites")]
 public class Favorite
 {
+    [Key]
+    public int Id { get; set; } 
     [Required]
-    public uint UserId { get; set; }
+    public int UserId { get; set; }
 
     [Required]
-    public uint LandmarkId { get; set; }
+    public int LandmarkId { get; set; }
 
     public DateTime CreatedAt { get; set; }
 
