@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DTOS\" />
+    <Folder Include="Dtos\" />
     <Folder Include="ViewModels\" />
   </ItemGroup>
 
