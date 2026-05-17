@@ -1,4 +1,6 @@
 using System.Text;
+using System.Reflection;
+using Had360back.Common;
 using Had360back.Data;
 using Had360back.Data.Seeders;
 using Had360back.Models;
@@ -19,6 +21,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(o =>
 {
+    var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFilename);
+
+    o.IncludeXmlComments(xmlPath);
     o.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo()
     {
         Version = "v1",
@@ -97,6 +103,20 @@ builder.Services.AddAuthentication(options =>
 // Register Custom Services
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<ILandmarkService, LandmarkService>();
+builder.Services.AddScoped<IFileStorageService, LocalFileStorageService>();
+
+// Favorites & Current User
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
+builder.Services.AddScoped<IFavoriteService, FavoriteService>();
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy(AuthorizationPolicies.ManageContent, policy =>
+        policy.RequireRole(IdentityRoles.Admin, IdentityRoles.ContentManager));
+});
 
 var app = builder.Build();
 
@@ -126,6 +146,7 @@ app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseStaticFiles();
 
 app.MapControllers();
 
