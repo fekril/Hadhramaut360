@@ -106,6 +106,7 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<ILandmarkService, LandmarkService>();
 builder.Services.AddScoped<IFileStorageService, LocalFileStorageService>();
+builder.Services.AddScoped<IOrganizationService, OrganizationService>();
 
 // Favorites & Current User
 builder.Services.AddHttpContextAccessor();
@@ -116,6 +117,8 @@ builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy(AuthorizationPolicies.ManageContent, policy =>
         policy.RequireRole(IdentityRoles.Admin, IdentityRoles.ContentManager));
+    options.AddPolicy(AuthorizationPolicies.OrganizationOnly, policy =>
+        policy.RequireRole(IdentityRoles.Organization));
 });
 
 var app = builder.Build();
@@ -136,13 +139,14 @@ using (var scope = app.Services.CreateScope())
 }
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
-app.UseHttpsRedirection();
+//if (app.Environment.IsDevelopment())
+//{
+//    app.UseSwagger();
+//    app.UseSwaggerUI();
+//}
+app.UseSwagger();
+app.UseSwaggerUI();
+//app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();

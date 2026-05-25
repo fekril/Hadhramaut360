@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Had360back.Common;
 using Had360back.DTOs.Landmarks;
@@ -40,7 +40,7 @@ public class LandmarksController : ControllerBase
     /// يمكن استخدامه للبحث عن معلم معين أو فلترة المعالم حسب التصنيف.
     /// </remarks>
     [HttpGet]
-    public async Task<ActionResult<ApiResponse<List<LandmarkResponseDto>>>> GetAll([FromQuery] LandmarkQueryDto query)
+    public async Task<ActionResult<ApiResponse<PaginatedResponse<LandmarkResponseDto>>>> GetAll([FromQuery] LandmarkQueryDto query)
     {
         var result = await _landmarkService.GetAllAsync(query);
         return StatusCode(result.StatusCode, result);

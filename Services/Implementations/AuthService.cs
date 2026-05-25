@@ -12,12 +12,14 @@ public class AuthService : IAuthService
     private readonly UserManager<User> _userManager;
     private readonly ITokenService _tokenService;
     private readonly DbContextApp _context;
+    private readonly IFileStorageService _fileStorageService;
 
-    public AuthService(UserManager<User> userManager, ITokenService tokenService, DbContextApp context)
+    public AuthService(UserManager<User> userManager, ITokenService tokenService, DbContextApp context, IFileStorageService fileStorageService)
     {
         _userManager = userManager;
         _tokenService = tokenService;
         _context = context;
+        _fileStorageService = fileStorageService;
     }
 
     public async Task<(bool Success, string Message, AuthResponseDto? Data)> LoginAsync(LoginDto dto)
@@ -61,6 +63,7 @@ public class AuthService : IAuthService
 
         using var transaction = await _context.Database.BeginTransactionAsync();
 
+        string? uploadedLogoUrl = null;
         try
         {
             var result = await _userManager.CreateAsync(user, dto.Password);
@@ -69,7 +72,10 @@ public class AuthService : IAuthService
 
             var roleResult = await _userManager.AddToRoleAsync(user, "Organization");
             if (!roleResult.Succeeded)
+            {
+                await transaction.RollbackAsync();
                 return (false, "Failed to assign role.", null);
+            }
 
             var organization = new Organization
             {
@@ -81,13 +87,20 @@ public class AuthService : IAuthService
                 AddressAr = dto.AddressAr,
                 AddressEn = dto.AddressEn,
                 MapUrl = dto.MapUrl,
-                LogoUrl = dto.LogoUrl,
+                LogoUrl = null,
                 CreatedAt = DateTime.UtcNow,
                 UpdatedAt = DateTime.UtcNow
             };
 
             _context.Organizations.Add(organization);
             await _context.SaveChangesAsync();
+
+            if (dto.LogoFile != null)
+            {
+                uploadedLogoUrl = await _fileStorageService.SaveOrganizationLogoAsync(user.Id, dto.LogoFile);
+                organization.LogoUrl = uploadedLogoUrl;
+                await _context.SaveChangesAsync();
+            }
 
             await transaction.CommitAsync();
 
@@ -108,6 +121,10 @@ public class AuthService : IAuthService
         catch (Exception)
         {
             await transaction.RollbackAsync();
+            if (uploadedLogoUrl != null)
+            {
+                await _fileStorageService.DeleteFileAsync(uploadedLogoUrl);
+            }
             return (false, "An error occurred during registration.", null);
         }
     }
@@ -132,7 +149,36 @@ public class AuthService : IAuthService
 
         var roleResult = await _userManager.AddToRoleAsync(user, "User");
         if (!roleResult.Succeeded)
+        {
+            await _userManager.DeleteAsync(user);
             return (false, "Failed to assign role.", null);
+        }
+
+        string? uploadedFileUrl = null;
+        if (dto.ProfileImageFile != null)
+        {
+            try
+            {
+                uploadedFileUrl = await _fileStorageService.SaveUserProfileImageAsync(user.Id, dto.ProfileImageFile);
+                user.ProfileImageUrl = uploadedFileUrl;
+                var updateResult = await _userManager.UpdateAsync(user);
+                if (!updateResult.Succeeded)
+                {
+                    await _fileStorageService.DeleteFileAsync(uploadedFileUrl);
+                    await _userManager.DeleteAsync(user);
+                    return (false, string.Join(", ", updateResult.Errors.Select(e => e.Description)), null);
+                }
+            }
+            catch (Exception)
+            {
+                if (uploadedFileUrl != null)
+                {
+                    await _fileStorageService.DeleteFileAsync(uploadedFileUrl);
+                }
+                await _userManager.DeleteAsync(user);
+                return (false, "An error occurred while uploading profile image.", null);
+            }
+        }
 
         var roles = await _userManager.GetRolesAsync(user);
         var token = _tokenService.GenerateToken(user, roles);

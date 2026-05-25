@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Http;
 
 namespace Had360back.Dtos.Auth;
 
@@ -17,4 +18,9 @@ public class RegisterUserDto
 
     [Phone]
     public string? PhoneNumber { get; set; }
+
+    /// <summary>
+    /// ملف الصورة الشخصية للمستخدم.
+    /// </summary>
+    public IFormFile? ProfileImageFile { get; set; }
 }

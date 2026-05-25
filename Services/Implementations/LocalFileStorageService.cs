@@ -17,7 +17,7 @@ public class LocalFileStorageService : IFileStorageService
         _env = env;
     }
 
-    public async Task<string> SaveLandmarkMediaAsync(int landmarkId, IFormFile file)
+    private void ValidateImage(IFormFile file, long maxSizeBytes)
     {
         if (file == null || file.Length == 0)
             throw new ArgumentException("File is empty.");
@@ -33,10 +33,16 @@ public class LocalFileStorageService : IFileStorageService
         if (!allowedContentTypes.Contains(file.ContentType.ToLowerInvariant()))
             throw new ArgumentException($"Invalid content type: {file.ContentType}");
 
-        // Validate size (10MB max)
-        if (file.Length > 10 * 1024 * 1024)
-            throw new ArgumentException("File size exceeds 10MB limit.");
+        // Validate size
+        if (file.Length > maxSizeBytes)
+            throw new ArgumentException($"File size exceeds {maxSizeBytes / (1024 * 1024)}MB limit.");
+    }
 
+    public async Task<string> SaveLandmarkMediaAsync(int landmarkId, IFormFile file)
+    {
+        ValidateImage(file, 10 * 1024 * 1024);
+
+        var extension = Path.GetExtension(file.FileName).ToLowerInvariant();
         var uploadsFolder = Path.Combine(_env.WebRootPath, "uploads", "landmarks", landmarkId.ToString());
         if (!Directory.Exists(uploadsFolder))
             Directory.CreateDirectory(uploadsFolder);
@@ -50,6 +56,46 @@ public class LocalFileStorageService : IFileStorageService
         }
 
         return $"/uploads/landmarks/{landmarkId}/{uniqueFileName}";
+    }
+
+    public async Task<string> SaveOrganizationLogoAsync(int organizationUserId, IFormFile file)
+    {
+        ValidateImage(file, 5 * 1024 * 1024);
+
+        var extension = Path.GetExtension(file.FileName).ToLowerInvariant();
+        var uploadsFolder = Path.Combine(_env.WebRootPath, "uploads", "organizations", organizationUserId.ToString(), "logo");
+        if (!Directory.Exists(uploadsFolder))
+            Directory.CreateDirectory(uploadsFolder);
+
+        var uniqueFileName = Guid.NewGuid().ToString("N") + extension;
+        var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+        using (var stream = new FileStream(filePath, FileMode.Create))
+        {
+            await file.CopyToAsync(stream);
+        }
+
+        return $"/uploads/organizations/{organizationUserId}/logo/{uniqueFileName}";
+    }
+
+    public async Task<string> SaveUserProfileImageAsync(int userId, IFormFile file)
+    {
+        ValidateImage(file, 5 * 1024 * 1024);
+
+        var extension = Path.GetExtension(file.FileName).ToLowerInvariant();
+        var uploadsFolder = Path.Combine(_env.WebRootPath, "uploads", "users", userId.ToString(), "profile");
+        if (!Directory.Exists(uploadsFolder))
+            Directory.CreateDirectory(uploadsFolder);
+
+        var uniqueFileName = Guid.NewGuid().ToString("N") + extension;
+        var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+        using (var stream = new FileStream(filePath, FileMode.Create))
+        {
+            await file.CopyToAsync(stream);
+        }
+
+        return $"/uploads/users/{userId}/profile/{uniqueFileName}";
     }
 
     public Task DeleteFileAsync(string? fileUrl)

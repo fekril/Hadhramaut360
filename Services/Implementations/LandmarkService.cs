@@ -41,7 +41,7 @@ public class LandmarkService : ILandmarkService
     /// هذه الدالة تستخدم Include لجلب التصنيفات والميديا المرتبطة بكل معلم.
     /// يتم ترتيب النتائج من الأحدث إلى الأقدم حسب CreatedAt.
     /// </remarks>
-    public async Task<ApiResponse<List<LandmarkResponseDto>>> GetAllAsync(LandmarkQueryDto query)
+    public async Task<ApiResponse<PaginatedResponse<LandmarkResponseDto>>> GetAllAsync(LandmarkQueryDto query)
     {
         var dbQuery = _context.Set<Landmark>()
             .Include(l => l.LandmarkCategories)
@@ -86,7 +86,29 @@ public class LandmarkService : ILandmarkService
         }
 
         var dtos = items.Select(l => MapToLandmarkResponse(l, favoriteLandmarkIds)).ToList();
-        return ApiResponse<List<LandmarkResponseDto>>.Ok(dtos);
+
+        var totalEntries = totalItems;
+        var currentPage = query.PageNumber;
+        var perPage = query.PageSize;
+        var totalPages = perPage > 0 ? (int)Math.Ceiling((double)totalEntries / perPage) : 0;
+        var previousPage = currentPage > 1 ? (int?)(currentPage - 1) : null;
+        var nextPage = currentPage < totalPages ? (int?)(currentPage + 1) : null;
+
+        var paginatedResponse = new PaginatedResponse<LandmarkResponseDto>
+        {
+            Items = dtos,
+            Pagination = new PaginationMeta
+            {
+                CurrentPage = currentPage,
+                NextPage = nextPage,
+                PerPage = perPage,
+                PreviousPage = previousPage,
+                TotalEntries = totalEntries,
+                TotalPages = totalPages
+            }
+        };
+
+        return ApiResponse<PaginatedResponse<LandmarkResponseDto>>.Ok(paginatedResponse);
     }
     
     

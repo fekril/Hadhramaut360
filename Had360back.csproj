@@ -28,6 +28,7 @@
     <Folder Include="Dtos\" />
     <Folder Include="ViewModels\" />
     <Folder Include="wwwroot\uploads\landmarks\" />
+    <Folder Include="wwwroot\uploads\users\" />
   </ItemGroup>
 
 </Project>

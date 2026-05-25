@@ -28,5 +28,11 @@ public static class ApiRoutes
         public const string Status = "{landmarkId:int}/status";
         public const string Toggle = "{landmarkId:int}/toggle";
     }
+
+    public static class Organizations
+    {
+        public const string Base = Root + "/organizations";
+        public const string Me = "me";
+    }
 }
 

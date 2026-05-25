@@ -15,8 +15,14 @@ public class AuthController : ControllerBase
         _authService = authService;
     }
 
+    /// <summary>
+    /// تسجيل حساب مستخدم عادي جديد مع إمكانية رفع صورة شخصية اختيارية.
+    /// </summary>
+    /// <param name="dto">بيانات التسجيل للمستخدم</param>
+    /// <returns>نتيجة عملية التسجيل وتوكن الدخول</returns>
     [HttpPost("register-user")]
-    public async Task<IActionResult> RegisterUser([FromBody] RegisterUserDto dto)
+    [Consumes("multipart/form-data")]
+    public async Task<IActionResult> RegisterUser([FromForm] RegisterUserDto dto)
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
@@ -29,8 +35,14 @@ public class AuthController : ControllerBase
         return Ok(new { result.Message, result.Data });
     }
 
+    /// <summary>
+    /// تسجيل حساب مؤسسة جديد مع إمكانية رفع شعار للمؤسسة.
+    /// </summary>
+    /// <param name="dto">بيانات التسجيل للمؤسسة</param>
+    /// <returns>نتيجة عملية التسجيل وتوكن الدخول للمؤسسة</returns>
     [HttpPost("register-organization")]
-    public async Task<IActionResult> RegisterOrganization([FromBody] RegisterOrganizationDto dto)
+    [Consumes("multipart/form-data")]
+    public async Task<IActionResult> RegisterOrganization([FromForm] RegisterOrganizationDto dto)
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState);

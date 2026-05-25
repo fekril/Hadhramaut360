@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Http;
 
 namespace Had360back.Dtos.Auth;
 
@@ -27,6 +28,8 @@ public class RegisterOrganizationDto : RegisterUserDto
     [MaxLength(500)]
     public string? MapUrl { get; set; }
 
-    [MaxLength(500)]
-    public string? LogoUrl { get; set; }
+    /// <summary>
+    /// ملف شعار المؤسسة.
+    /// </summary>
+    public IFormFile? LogoFile { get; set; }
 }

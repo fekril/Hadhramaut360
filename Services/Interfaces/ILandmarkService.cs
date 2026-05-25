@@ -7,7 +7,7 @@ namespace Had360back.Services.Interfaces;
 
 public interface ILandmarkService
 {
-    Task<ApiResponse<List<LandmarkResponseDto>>> GetAllAsync(LandmarkQueryDto query);
+    Task<ApiResponse<PaginatedResponse<LandmarkResponseDto>>> GetAllAsync(LandmarkQueryDto query);
     Task<ApiResponse<LandmarkDetailsDto>> GetByIdAsync(int id);
     Task<ApiResponse<LandmarkDetailsDto>> CreateAsync(CreateLandmarkDto dto);
     Task<ApiResponse<LandmarkDetailsDto>> CreateWithMediaAsync(CreateLandmarkWithMediaDto dto);
