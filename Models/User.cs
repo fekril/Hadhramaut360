@@ -2,13 +2,20 @@ using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Had360back.Models;
 
-[Table("users")]
 public class User : IdentityUser<int>
 {
+    /// <summary>
+    /// Public display name shown in the frontend.
+    /// This is NOT the Identity UserName (which is internal and unique).
+    /// FullName is not required to be unique — multiple users can share the same name.
+    /// </summary>
+    [Required]
+    [MaxLength(150)]
+    public string FullName { get; set; } = null!;
+
     [MaxLength(500)]
     public string? ProfileImageUrl { get; set; }
     public DateTime CreatedAt { get; set; }

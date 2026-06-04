@@ -6,7 +6,8 @@ namespace Had360back.Dtos.Auth;
 public class RegisterUserDto
 {
     [Required]
-    public string UserName { get; set; } = null!;
+    [MaxLength(150)]
+    public string FullName { get; set; } = null!;
 
     [Required]
     [EmailAddress]
@@ -20,7 +21,7 @@ public class RegisterUserDto
     public string? PhoneNumber { get; set; }
 
     /// <summary>
-    /// ملف الصورة الشخصية للمستخدم.
+    /// Optional profile image file for the user account.
     /// </summary>
     public IFormFile? ProfileImageFile { get; set; }
 }

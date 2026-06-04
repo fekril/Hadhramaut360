@@ -6,13 +6,14 @@ namespace Had360back.Dtos.AdminUsers;
 /// <summary>
 /// Input DTO for creating a new ContentManager account.
 /// Used by Admin via POST /api/admin/users/content-managers.
-/// Profile image is optional; if provided it is saved using the existing
-/// user profile image storage method.
+/// FullName is the display name for the account owner.
+/// UserName is generated internally — frontend does not supply it.
 /// </summary>
 public class CreateContentManagerDto
 {
-    [Required(ErrorMessage = "User name is required.")]
-    public string UserName { get; set; } = null!;
+    [Required(ErrorMessage = "Full name is required.")]
+    [MaxLength(150)]
+    public string FullName { get; set; } = null!;
 
     [Required(ErrorMessage = "Email is required.")]
     [EmailAddress(ErrorMessage = "The email address format is invalid.")]

@@ -45,7 +45,9 @@ public class AdminUserService : IAdminUserService
         return new AdminUserResponseDto
         {
             UserId          = user.Id,
-            UserName        = user.UserName,
+            FullName        = !string.IsNullOrWhiteSpace(user.FullName)
+                                ? user.FullName
+                                : user.Email ?? user.UserName ?? "User",
             Email           = user.Email,
             PhoneNumber     = user.PhoneNumber,
             ProfileImageUrl = user.ProfileImageUrl,
@@ -128,8 +130,8 @@ public class AdminUserService : IAdminUserService
         {
             var lowerSearch = query.Search.Trim().ToLower();
             dbQuery = dbQuery.Where(u =>
-                (u.UserName    != null && u.UserName.ToLower().Contains(lowerSearch)) ||
-                (u.Email       != null && u.Email.ToLower().Contains(lowerSearch))    ||
+                (u.FullName    != null && u.FullName.ToLower().Contains(lowerSearch))    ||
+                (u.Email       != null && u.Email.ToLower().Contains(lowerSearch))        ||
                 (u.PhoneNumber != null && u.PhoneNumber.ToLower().Contains(lowerSearch)));
         }
 
@@ -171,7 +173,8 @@ public class AdminUserService : IAdminUserService
 
         var user = new User
         {
-            UserName    = dto.UserName,
+            UserName    = $"temp_{Guid.NewGuid():N}",   // replaced with user{id} after creation
+            FullName    = dto.FullName,
             Email       = dto.Email,
             PhoneNumber = dto.PhoneNumber,
             CreatedAt   = DateTime.UtcNow
@@ -191,6 +194,9 @@ public class AdminUserService : IAdminUserService
                 return ApiResponse<AdminUserResponseDto>.Fail(
                     string.Join(", ", errors), errors, 400);
             }
+
+            // Set stable internal UserName "user{id}" via Identity (updates NormalizedUserName)
+            await _userManager.SetUserNameAsync(user, $"user{user.Id}");
 
             // 2. Assign ContentManager role
             var roleResult = await _userManager.AddToRoleAsync(user, IdentityRoles.ContentManager);

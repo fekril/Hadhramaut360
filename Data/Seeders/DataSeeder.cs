@@ -27,8 +27,9 @@ public static class DataSeeder
         {
             var admin1 = new User
             {
-                UserName = "AdminOne",
-                Email = admin1Email,
+                UserName  = "AdminOne",   // kept as-is for existing seeded admin
+                FullName  = "Admin One",
+                Email     = admin1Email,
                 CreatedAt = DateTime.UtcNow
             };
             var result = await userManager.CreateAsync(admin1, "Admin@123");
@@ -43,8 +44,9 @@ public static class DataSeeder
         {
             var admin2 = new User
             {
-                UserName = "AdminTwo",
-                Email = admin2Email,
+                UserName  = "AdminTwo",   // kept as-is for existing seeded admin
+                FullName  = "Admin Two",
+                Email     = admin2Email,
                 CreatedAt = DateTime.UtcNow
             };
             var result = await userManager.CreateAsync(admin2, "Admin@123");

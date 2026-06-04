@@ -116,8 +116,10 @@ public class CommunityPostService : ICommunityPostService
     /// </summary>
     private static CommunityPostUserDto MapToUserDto(User user) => new()
     {
-        UserId         = user.Id,
-        UserName       = user.UserName,
+        UserId          = user.Id,
+        FullName        = !string.IsNullOrWhiteSpace(user.FullName)
+                            ? user.FullName
+                            : user.Email ?? user.UserName ?? "User",
         ProfileImageUrl = user.ProfileImageUrl
     };
 

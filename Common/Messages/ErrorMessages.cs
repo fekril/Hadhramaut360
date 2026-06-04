@@ -16,4 +16,8 @@ public static class ErrorMessages
     public const string CannotDeleteLastAdmin = "Cannot delete the last remaining Admin account.";
     public const string DeleteUserFailed     = "Failed to delete the user. Please try again.";
     public const string UnexpectedError      = "An unexpected error occurred. Please try again later.";
+    public const string IncorrectPassword    = "Current password is incorrect.";
+    public const string NoProfileImage       = "No profile image to delete.";
+    public const string ChangePasswordFailed = "Failed to change password. Please check your current password.";
+    public const string ChangeEmailFailed    = "Failed to update email. Please try again.";
 }

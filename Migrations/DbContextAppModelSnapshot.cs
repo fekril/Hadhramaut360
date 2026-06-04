@@ -73,7 +73,7 @@ namespace Had360back.Migrations
 
                     b.HasKey("ArtisanId");
 
-                    b.ToTable("artisans");
+                    b.ToTable("artisans", (string)null);
                 });
 
             modelBuilder.Entity("Had360back.Models.ArtisanMedia", b =>
@@ -105,7 +105,7 @@ namespace Had360back.Migrations
 
                     b.HasIndex("ArtisanId");
 
-                    b.ToTable("artisan_media");
+                    b.ToTable("artisan_media", (string)null);
                 });
 
             modelBuilder.Entity("Had360back.Models.Category", b =>
@@ -131,7 +131,7 @@ namespace Had360back.Migrations
 
                     b.HasKey("CategoryId");
 
-                    b.ToTable("categories");
+                    b.ToTable("categories", (string)null);
                 });
 
             modelBuilder.Entity("Had360back.Models.CommunityPost", b =>
@@ -159,7 +159,7 @@ namespace Had360back.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("community_posts");
+                    b.ToTable("community_posts", (string)null);
                 });
 
             modelBuilder.Entity("Had360back.Models.DiscoverContent", b =>
@@ -203,7 +203,7 @@ namespace Had360back.Migrations
 
                     b.HasKey("ContentId");
 
-                    b.ToTable("discover_content");
+                    b.ToTable("discover_content", (string)null);
                 });
 
             modelBuilder.Entity("Had360back.Models.Event", b =>
@@ -269,7 +269,7 @@ namespace Had360back.Migrations
 
                     b.HasIndex("OrgUserId");
 
-                    b.ToTable("events");
+                    b.ToTable("events", (string)null);
                 });
 
             modelBuilder.Entity("Had360back.Models.EventMedia", b =>
@@ -298,7 +298,7 @@ namespace Had360back.Migrations
 
                     b.HasIndex("EventId");
 
-                    b.ToTable("event_media");
+                    b.ToTable("event_media", (string)null);
                 });
 
             modelBuilder.Entity("Had360back.Models.Favorite", b =>
@@ -324,7 +324,7 @@ namespace Had360back.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("favorites");
+                    b.ToTable("favorites", (string)null);
                 });
 
             modelBuilder.Entity("Had360back.Models.Landmark", b =>
@@ -374,7 +374,7 @@ namespace Had360back.Migrations
 
                     b.HasKey("LandmarkId");
 
-                    b.ToTable("landmarks");
+                    b.ToTable("landmarks", (string)null);
                 });
 
             modelBuilder.Entity("Had360back.Models.LandmarkCategory", b =>
@@ -397,7 +397,7 @@ namespace Had360back.Migrations
 
                     b.HasIndex("LandmarkId");
 
-                    b.ToTable("landmark_categories");
+                    b.ToTable("landmark_categories", (string)null);
                 });
 
             modelBuilder.Entity("Had360back.Models.LandmarkMedia", b =>
@@ -426,7 +426,7 @@ namespace Had360back.Migrations
 
                     b.HasIndex("LandmarkId");
 
-                    b.ToTable("landmark_media");
+                    b.ToTable("landmark_media", (string)null);
                 });
 
             modelBuilder.Entity("Had360back.Models.Organization", b =>
@@ -476,7 +476,7 @@ namespace Had360back.Migrations
 
                     b.HasKey("UserId");
 
-                    b.ToTable("organizations");
+                    b.ToTable("organizations", (string)null);
                 });
 
             modelBuilder.Entity("Had360back.Models.PostMedia", b =>
@@ -505,7 +505,7 @@ namespace Had360back.Migrations
 
                     b.HasIndex("PostId");
 
-                    b.ToTable("post_media");
+                    b.ToTable("post_media", (string)null);
                 });
 
             modelBuilder.Entity("Had360back.Models.Report", b =>
@@ -535,7 +535,7 @@ namespace Had360back.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("reports");
+                    b.ToTable("reports", (string)null);
                 });
 
             modelBuilder.Entity("Had360back.Models.Role", b =>

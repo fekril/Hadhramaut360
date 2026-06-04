@@ -12,4 +12,8 @@ public static class SuccessMessages
     public const string UpdatedSuccessfully            = "Updated successfully.";
     public const string UserDeletedSuccessfully        = "User and all related data deleted successfully.";
     public const string ContentManagerCreatedSuccessfully = "Content manager account created successfully.";
+    public const string ProfileUpdatedSuccessfully     = "Profile updated successfully.";
+    public const string EmailChangedSuccessfully       = "Email changed successfully.";
+    public const string PasswordChangedSuccessfully    = "Password changed successfully.";
+    public const string ProfileImageDeletedSuccessfully = "Profile image deleted successfully.";
 }

@@ -70,7 +70,9 @@ public class CommunityPostReportService : ICommunityPostReportService
     private static CommunityPostUserDto MapToUserDto(User user) => new()
     {
         UserId          = user.Id,
-        UserName        = user.UserName,
+        FullName        = !string.IsNullOrWhiteSpace(user.FullName)
+                            ? user.FullName
+                            : user.Email ?? user.UserName ?? "User",
         ProfileImageUrl = user.ProfileImageUrl
     };
 
@@ -96,7 +98,9 @@ public class CommunityPostReportService : ICommunityPostReportService
         ReportedBy = new ReportedByUserDto
         {
             UserId          = report.User.Id,
-            UserName        = report.User.UserName,
+            FullName        = !string.IsNullOrWhiteSpace(report.User.FullName)
+                                ? report.User.FullName
+                                : report.User.Email ?? report.User.UserName ?? "User",
             ProfileImageUrl = report.User.ProfileImageUrl
         },
         ReportedPost = new ReportedPostDto

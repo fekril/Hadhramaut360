@@ -118,5 +118,17 @@ public static class ApiRoutes
         public const string ById            = "{id:int}";
         public const string ContentManagers = "content-managers";
     }
+
+    /// <summary>
+    /// Account self-management routes (authenticated user).
+    /// </summary>
+    public static class Account
+    {
+        public const string Base         = Root + "/account";
+        public const string Me           = "me";
+        public const string Email        = "email";
+        public const string Password     = "password";
+        public const string ProfileImage = "profile-image";
+    }
 }
 

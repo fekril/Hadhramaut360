@@ -131,6 +131,7 @@ builder.Services.AddScoped<ICommunityPostService, CommunityPostService>();
 builder.Services.AddScoped<ICommunityPostReportService, CommunityPostReportService>();
 builder.Services.AddScoped<IDashboardService, DashboardService>();
 builder.Services.AddScoped<IAdminUserService, AdminUserService>();
+builder.Services.AddScoped<IAccountService, AccountService>();
 
 builder.Services.AddAuthorization(options =>
 {
