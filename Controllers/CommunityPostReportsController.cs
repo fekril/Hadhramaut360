@@ -14,7 +14,7 @@ namespace Had360back.Controllers;
 /// </summary>
 [ApiController]
 [Route(ApiRoutes.CommunityPostReports.Base)]
-[Authorize(Policy = AuthorizationPolicies.ManageContent)]
+[Authorize(Policy = AuthorizationPolicies.AdminOnly)]
 public class CommunityPostReportsController : ControllerBase
 {
     private readonly ICommunityPostReportService _reportService;
