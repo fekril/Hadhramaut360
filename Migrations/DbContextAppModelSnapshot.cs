@@ -239,7 +239,6 @@ namespace Had360back.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("FormUrl")
-                        .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 

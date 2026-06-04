@@ -1,6 +1,7 @@
 using Had360back.Data;
 using Had360back.Dtos.Auth;
 using Had360back.Models;
+using Had360back.Common;
 using Had360back.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -70,7 +71,7 @@ public class AuthService : IAuthService
             if (!result.Succeeded)
                 return (false, string.Join(", ", result.Errors.Select(e => e.Description)), null);
 
-            var roleResult = await _userManager.AddToRoleAsync(user, "Organization");
+            var roleResult = await _userManager.AddToRoleAsync(user, IdentityRoles.Organization);
             if (!roleResult.Succeeded)
             {
                 await transaction.RollbackAsync();
@@ -147,7 +148,7 @@ public class AuthService : IAuthService
         if (!result.Succeeded)
             return (false, string.Join(", ", result.Errors.Select(e => e.Description)), null);
 
-        var roleResult = await _userManager.AddToRoleAsync(user, "User");
+        var roleResult = await _userManager.AddToRoleAsync(user, IdentityRoles.User);
         if (!roleResult.Succeeded)
         {
             await _userManager.DeleteAsync(user);

@@ -39,9 +39,8 @@ public class Event
     [MaxLength(150)]
     public string AddressEn { get; set; } = null!;
 
-    [Required]
     [MaxLength(500)]
-    public string FormUrl { get; set; } = null!;
+    public string? FormUrl { get; set; }
 
     [Required]
     public DateTime StartDate { get; set; }

@@ -60,7 +60,7 @@ public class LocalFileStorageService : IFileStorageService
 
     public async Task<string> SaveOrganizationLogoAsync(int organizationUserId, IFormFile file)
     {
-        ValidateImage(file, 5 * 1024 * 1024);
+        ValidateImage(file, 10 * 1024 * 1024);
 
         var extension = Path.GetExtension(file.FileName).ToLowerInvariant();
         var uploadsFolder = Path.Combine(_env.WebRootPath, "uploads", "organizations", organizationUserId.ToString(), "logo");
@@ -80,7 +80,7 @@ public class LocalFileStorageService : IFileStorageService
 
     public async Task<string> SaveUserProfileImageAsync(int userId, IFormFile file)
     {
-        ValidateImage(file, 5 * 1024 * 1024);
+        ValidateImage(file, 10 * 1024 * 1024);
 
         var extension = Path.GetExtension(file.FileName).ToLowerInvariant();
         var uploadsFolder = Path.Combine(_env.WebRootPath, "uploads", "users", userId.ToString(), "profile");
@@ -96,6 +96,114 @@ public class LocalFileStorageService : IFileStorageService
         }
 
         return $"/uploads/users/{userId}/profile/{uniqueFileName}";
+    }
+
+    /// <summary>
+    /// يحفظ ملف ميديا مرتبط بفعالية في مجلد التخزين المحلي.
+    /// يتحقق من نوع الملف وحجمه قبل الحفظ.
+    /// </summary>
+    /// <param name="eventId">رقم الفعالية التي سيتم ربط الملف بها.</param>
+    /// <param name="file">الملف المراد رفعه.</param>
+    /// <returns>الرابط النسبي للملف المحفوظ.</returns>
+    public async Task<string> SaveEventMediaAsync(int eventId, IFormFile file)
+    {
+        ValidateImage(file, 10 * 1024 * 1024);
+
+        var extension = Path.GetExtension(file.FileName).ToLowerInvariant();
+        var uploadsFolder = Path.Combine(_env.WebRootPath, "uploads", "events", eventId.ToString());
+        if (!Directory.Exists(uploadsFolder))
+            Directory.CreateDirectory(uploadsFolder);
+
+        var uniqueFileName = Guid.NewGuid().ToString("N") + extension;
+        var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+        using (var stream = new FileStream(filePath, FileMode.Create))
+        {
+            await file.CopyToAsync(stream);
+        }
+
+        return $"/uploads/events/{eventId}/{uniqueFileName}";
+    }
+
+    /// <summary>
+    /// يحفظ صورة غلاف مرتبطة بمحتوى اكتشاف في مجلد التخزين المحلي.
+    /// يتحقق من نوع الملف وحجمه قبل الحفظ.
+    /// </summary>
+    /// <param name="contentId">رقم عنصر محتوى الاكتشاف الذي سيتم ربط الصورة به.</param>
+    /// <param name="file">الملف المراد رفعه.</param>
+    /// <returns>الرابط النسبي للملف المحفوظ.</returns>
+    public async Task<string> SaveDiscoverContentCoverAsync(int contentId, IFormFile file)
+    {
+        ValidateImage(file, 5 * 1024 * 1024);
+
+        var extension = Path.GetExtension(file.FileName).ToLowerInvariant();
+        var uploadsFolder = Path.Combine(_env.WebRootPath, "uploads", "discover-content", contentId.ToString());
+        if (!Directory.Exists(uploadsFolder))
+            Directory.CreateDirectory(uploadsFolder);
+
+        var uniqueFileName = Guid.NewGuid().ToString("N") + extension;
+        var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+        using (var stream = new FileStream(filePath, FileMode.Create))
+        {
+            await file.CopyToAsync(stream);
+        }
+
+        return $"/uploads/discover-content/{contentId}/{uniqueFileName}";
+    }
+
+    /// <summary>
+    /// يحفظ ملف ميديا مرتبط بحرفي في مجلد التخزين المحلي.
+    /// يتحقق من نوع الملف وحجمه قبل الحفظ.
+    /// </summary>
+    /// <param name="artisanId">رقم الحرفي الذي سيتم ربط الملف به.</param>
+    /// <param name="file">الملف المراد رفعه.</param>
+    /// <returns>الرابط النسبي للملف المحفوظ.</returns>
+    public async Task<string> SaveArtisanMediaAsync(int artisanId, IFormFile file)
+    {
+        ValidateImage(file, 10 * 1024 * 1024);
+
+        var extension = Path.GetExtension(file.FileName).ToLowerInvariant();
+        var uploadsFolder = Path.Combine(_env.WebRootPath, "uploads", "artisans", artisanId.ToString());
+        if (!Directory.Exists(uploadsFolder))
+            Directory.CreateDirectory(uploadsFolder);
+
+        var uniqueFileName = Guid.NewGuid().ToString("N") + extension;
+        var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+        using (var stream = new FileStream(filePath, FileMode.Create))
+        {
+            await file.CopyToAsync(stream);
+        }
+
+        return $"/uploads/artisans/{artisanId}/{uniqueFileName}";
+    }
+
+    /// <summary>
+    /// يحفظ ملف ميديا مرتبط بمنشور مجتمعي في مجلد التخزين المحلي.
+    /// يتحقق من نوع الملف وحجمه قبل الحفظ.
+    /// </summary>
+    /// <param name="postId">رقم المنشور الذي سيتم ربط الملف به.</param>
+    /// <param name="file">الملف المراد رفعه.</param>
+    /// <returns>الرابط النسبي للملف المحفوظ.</returns>
+    public async Task<string> SavePostMediaAsync(int postId, IFormFile file)
+    {
+        ValidateImage(file, 10 * 1024 * 1024);
+
+        var extension = Path.GetExtension(file.FileName).ToLowerInvariant();
+        var uploadsFolder = Path.Combine(_env.WebRootPath, "uploads", "community-posts", postId.ToString());
+        if (!Directory.Exists(uploadsFolder))
+            Directory.CreateDirectory(uploadsFolder);
+
+        var uniqueFileName = Guid.NewGuid().ToString("N") + extension;
+        var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+        using (var stream = new FileStream(filePath, FileMode.Create))
+        {
+            await file.CopyToAsync(stream);
+        }
+
+        return $"/uploads/community-posts/{postId}/{uniqueFileName}";
     }
 
     public Task DeleteFileAsync(string? fileUrl)

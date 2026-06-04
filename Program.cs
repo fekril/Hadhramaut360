@@ -17,6 +17,18 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("ReactApp", policy =>
+    {
+        policy.WithOrigins(
+                "http://localhost:5173",
+                "https://had360.runasp.net"
+            )
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(o =>
@@ -112,6 +124,13 @@ builder.Services.AddScoped<IOrganizationService, OrganizationService>();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 builder.Services.AddScoped<IFavoriteService, FavoriteService>();
+builder.Services.AddScoped<IEventService, EventService>();
+builder.Services.AddScoped<IDiscoverContentService, DiscoverContentService>();
+builder.Services.AddScoped<IArtisanService, ArtisanService>();
+builder.Services.AddScoped<ICommunityPostService, CommunityPostService>();
+builder.Services.AddScoped<ICommunityPostReportService, CommunityPostReportService>();
+builder.Services.AddScoped<IDashboardService, DashboardService>();
+builder.Services.AddScoped<IAdminUserService, AdminUserService>();
 
 builder.Services.AddAuthorization(options =>
 {
@@ -119,6 +138,8 @@ builder.Services.AddAuthorization(options =>
         policy.RequireRole(IdentityRoles.Admin, IdentityRoles.ContentManager));
     options.AddPolicy(AuthorizationPolicies.OrganizationOnly, policy =>
         policy.RequireRole(IdentityRoles.Organization));
+    options.AddPolicy(AuthorizationPolicies.AdminOnly, policy =>
+        policy.RequireRole(IdentityRoles.Admin));
 });
 
 var app = builder.Build();
@@ -147,7 +168,7 @@ using (var scope = app.Services.CreateScope())
 app.UseSwagger();
 app.UseSwaggerUI();
 //app.UseHttpsRedirection();
-
+app.UseCors("ReactApp");
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseStaticFiles();
