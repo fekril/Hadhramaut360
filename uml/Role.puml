@@ -1,0 +1,7 @@
+@startuml
+class Role {
+}
+class "IdentityRole`1"<T> {
+}
+"IdentityRole`1" "<int>" <|-- Role
+@enduml

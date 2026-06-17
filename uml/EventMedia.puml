@@ -1,0 +1,10 @@
+@startuml
+class EventMedia {
+    + MediaId : int <<get>> <<set>>
+    + EventId : int <<get>> <<set>>
+    + MediaUrl : string <<get>> <<set>>
+}
+EventMedia --> "MediaType" MediaType
+EventMedia --> "CreatedAt" DateTime
+EventMedia o-> "Event" Event
+@enduml

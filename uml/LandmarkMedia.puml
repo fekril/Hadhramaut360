@@ -1,0 +1,10 @@
+@startuml
+class LandmarkMedia {
+    + MediaId : int <<get>> <<set>>
+    + LandmarkId : int <<get>> <<set>>
+    + MediaUrl : string <<get>> <<set>>
+}
+LandmarkMedia --> "MediaType" MediaType
+LandmarkMedia --> "CreatedAt" DateTime
+LandmarkMedia o-> "Landmark" Landmark
+@enduml

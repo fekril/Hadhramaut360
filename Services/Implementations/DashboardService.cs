@@ -9,8 +9,13 @@ using Microsoft.EntityFrameworkCore;
 namespace Had360back.Services.Implementations;
 
 /// <summary>
-/// Implements dashboard statistics by running efficient CountAsync queries
-/// against the database. No sensitive data is exposed.
+/// Implements dashboard statistics by running sequential CountAsync queries
+/// against the database.
+///
+/// IMPORTANT: EF Core DbContext is NOT thread-safe.
+/// Task.WhenAll on the same DbContext causes:
+/// "A second operation was started on this context before a previous operation completed."
+/// All queries must be awaited one at a time.
 /// </summary>
 public class DashboardService : IDashboardService
 {
@@ -24,43 +29,29 @@ public class DashboardService : IDashboardService
     /// <inheritdoc />
     public async Task<ApiResponse<DashboardStatsDto>> GetStatsAsync()
     {
-        // Run all counts concurrently for best performance
-        var usersCountTask          = _context.Users.CountAsync();
-        var organizationsCountTask  = _context.Organizations.CountAsync();
-        var reportsCountTask        = _context.Reports.CountAsync();
-        var landmarksCountTask      = _context.Landmarks.CountAsync();
-        var eventsCountTask         = _context.Events.CountAsync();
-        var artisansCountTask       = _context.Artisans.CountAsync();
-        var discoverContentCountTask = _context.DiscoverContent.CountAsync();
-        var communityPostsCountTask = _context.CommunityPosts.CountAsync();
-
-        await Task.WhenAll(
-            usersCountTask,
-            organizationsCountTask,
-            reportsCountTask,
-            landmarksCountTask,
-            eventsCountTask,
-            artisansCountTask,
-            discoverContentCountTask,
-            communityPostsCountTask);
-
-        var landmarks      = landmarksCountTask.Result;
-        var events         = eventsCountTask.Result;
-        var artisans       = artisansCountTask.Result;
-        var discoverContent = discoverContentCountTask.Result;
-        var communityPosts = communityPostsCountTask.Result;
+        // Each query is awaited separately — EF Core DbContext is not thread-safe
+        // and cannot handle concurrent async operations on the same instance.
+        var usersCount           = await _context.Users.CountAsync();
+        var organizationsCount   = await _context.Organizations.CountAsync();
+        var reportsCount         = await _context.Reports.CountAsync();
+        var landmarksCount       = await _context.Landmarks.CountAsync();
+        var eventsCount          = await _context.Events.CountAsync();
+        var artisansCount        = await _context.Artisans.CountAsync();
+        var discoverContentCount = await _context.DiscoverContent.CountAsync();
+        var communityPostsCount  = await _context.CommunityPosts.CountAsync();
 
         var stats = new DashboardStatsDto
         {
-            UsersCount           = usersCountTask.Result,
-            OrganizationsCount   = organizationsCountTask.Result,
-            ReportsCount         = reportsCountTask.Result,
-            LandmarksCount       = landmarks,
-            EventsCount          = events,
-            ArtisansCount        = artisans,
-            DiscoverContentCount = discoverContent,
-            CommunityPostsCount  = communityPosts,
-            TotalContentCount    = landmarks + events + artisans + discoverContent + communityPosts
+            UsersCount           = usersCount,
+            OrganizationsCount   = organizationsCount,
+            ReportsCount         = reportsCount,
+            LandmarksCount       = landmarksCount,
+            EventsCount          = eventsCount,
+            ArtisansCount        = artisansCount,
+            DiscoverContentCount = discoverContentCount,
+            CommunityPostsCount  = communityPostsCount,
+            TotalContentCount    = landmarksCount + eventsCount + artisansCount
+                                   + discoverContentCount + communityPostsCount
         };
 
         return ApiResponse<DashboardStatsDto>.Ok(stats, SuccessMessages.RetrievedSuccessfully);

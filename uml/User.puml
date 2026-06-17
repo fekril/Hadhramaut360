@@ -1,0 +1,16 @@
+@startuml
+class User {
+    + FullName : string <<get>> <<set>>
+    + ProfileImageUrl : string? <<get>> <<set>>
+}
+class "IdentityUser`1"<T> {
+}
+class "ICollection`1"<T> {
+}
+"IdentityUser`1" "<int>" <|-- User
+User --> "CreatedAt" DateTime
+User --> "Organization" Organization
+User o-> "CommunityPosts<CommunityPost>" "ICollection`1"
+User o-> "Reports<Report>" "ICollection`1"
+User o-> "Favorites<Favorite>" "ICollection`1"
+@enduml

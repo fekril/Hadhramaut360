@@ -1,0 +1,11 @@
+@startuml
+class Report {
+    + ReportId : int <<get>> <<set>>
+    + UserId : int <<get>> <<set>>
+    + PostId : int <<get>> <<set>>
+    + Reason : string <<get>> <<set>>
+}
+Report --> "CreatedAt" DateTime
+Report o-> "User" User
+Report o-> "Post" CommunityPost
+@enduml

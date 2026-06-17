@@ -23,7 +23,8 @@ builder.Services.AddCors(options =>
     {
         policy.WithOrigins(
                 "http://localhost:5173",
-                "https://had360.runasp.net"
+                "https://had360.runasp.net",
+                "https://quartz-breath-4zpy.here.now"
             )
             .AllowAnyHeader()
             .AllowAnyMethod();

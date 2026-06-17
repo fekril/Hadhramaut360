@@ -1,0 +1,10 @@
+@startuml
+class PostMedia {
+    + MediaId : int <<get>> <<set>>
+    + PostId : int <<get>> <<set>>
+    + MediaUrl : string <<get>> <<set>>
+}
+PostMedia --> "MediaType" MediaType
+PostMedia --> "CreatedAt" DateTime
+PostMedia o-> "Post" CommunityPost
+@enduml

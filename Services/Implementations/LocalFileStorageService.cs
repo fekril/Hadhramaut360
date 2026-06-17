@@ -134,7 +134,7 @@ public class LocalFileStorageService : IFileStorageService
     /// <returns>الرابط النسبي للملف المحفوظ.</returns>
     public async Task<string> SaveDiscoverContentCoverAsync(int contentId, IFormFile file)
     {
-        ValidateImage(file, 5 * 1024 * 1024);
+        ValidateImage(file, 10 * 1024 * 1024);
 
         var extension = Path.GetExtension(file.FileName).ToLowerInvariant();
         var uploadsFolder = Path.Combine(_env.WebRootPath, "uploads", "discover-content", contentId.ToString());

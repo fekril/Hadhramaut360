@@ -1,0 +1,19 @@
+@startuml
+class Organization {
+    + UserId : int <<get>> <<set>>
+    + OrgNameAr : string <<get>> <<set>>
+    + OrgNameEn : string <<get>> <<set>>
+    + DescriptionAr : string? <<get>> <<set>>
+    + DescriptionEn : string? <<get>> <<set>>
+    + AddressAr : string <<get>> <<set>>
+    + AddressEn : string <<get>> <<set>>
+    + MapUrl : string? <<get>> <<set>>
+    + LogoUrl : string? <<get>> <<set>>
+}
+class "ICollection`1"<T> {
+}
+Organization --> "CreatedAt" DateTime
+Organization --> "UpdatedAt" DateTime
+Organization o-> "User" User
+Organization o-> "Events<Event>" "ICollection`1"
+@enduml

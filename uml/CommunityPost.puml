@@ -1,0 +1,14 @@
+@startuml
+class CommunityPost {
+    + PostId : int <<get>> <<set>>
+    + UserId : int <<get>> <<set>>
+    + ContentText : string <<get>> <<set>>
+}
+class "ICollection`1"<T> {
+}
+CommunityPost --> "CreatedAt" DateTime
+CommunityPost --> "UpdatedAt" DateTime
+CommunityPost o-> "User" User
+CommunityPost o-> "PostMedia<PostMedia>" "ICollection`1"
+CommunityPost o-> "Reports<Report>" "ICollection`1"
+@enduml

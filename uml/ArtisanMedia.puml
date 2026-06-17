@@ -1,0 +1,11 @@
+@startuml
+class ArtisanMedia {
+    + MediaId : int <<get>> <<set>>
+    + ArtisanId : int <<get>> <<set>>
+    + MediaUrl : string <<get>> <<set>>
+    + IsCover : bool <<get>> <<set>>
+}
+ArtisanMedia --> "MediaType" MediaType
+ArtisanMedia --> "CreatedAt" DateTime
+ArtisanMedia o-> "Artisan" Artisan
+@enduml

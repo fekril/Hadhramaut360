@@ -1,0 +1,13 @@
+@startuml
+class DiscoverContent {
+    + ContentId : int <<get>> <<set>>
+    + TitleAr : string <<get>> <<set>>
+    + TitleEn : string <<get>> <<set>>
+    + BodyAr : string <<get>> <<set>>
+    + BodyEn : string <<get>> <<set>>
+    + CoverImageUrl : string? <<get>> <<set>>
+    + IsPublished : bool <<get>> <<set>>
+}
+DiscoverContent --> "CreatedAt" DateTime
+DiscoverContent --> "UpdatedAt" DateTime
+@enduml

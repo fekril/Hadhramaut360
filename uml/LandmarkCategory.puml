@@ -1,0 +1,9 @@
+@startuml
+class LandmarkCategory {
+    + Id : int <<get>> <<set>>
+    + LandmarkId : int <<get>> <<set>>
+    + CategoryId : int <<get>> <<set>>
+}
+LandmarkCategory o-> "Landmark" Landmark
+LandmarkCategory o-> "Category" Category
+@enduml

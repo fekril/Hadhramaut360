@@ -1,0 +1,19 @@
+@startuml
+!include .\\Artisan.puml
+!include .\\ArtisanMedia.puml
+!include .\\Category.puml
+!include .\\CommunityPost.puml
+!include .\\DiscoverContent.puml
+!include .\\Event.puml
+!include .\\EventMedia.puml
+!include .\\Favorite.puml
+!include .\\Landmark.puml
+!include .\\LandmarkCategory.puml
+!include .\\LandmarkMedia.puml
+!include .\\MediaType.puml
+!include .\\Organization.puml
+!include .\\PostMedia.puml
+!include .\\Report.puml
+!include .\\Role.puml
+!include .\\User.puml
+@enduml

@@ -1,0 +1,18 @@
+@startuml
+class Artisan {
+    + ArtisanId : int <<get>> <<set>>
+    + NameAr : string <<get>> <<set>>
+    + NameEn : string <<get>> <<set>>
+    + Phone : string <<get>> <<set>>
+    + DescriptionAr : string <<get>> <<set>>
+    + DescriptionEn : string <<get>> <<set>>
+    + LocationTextAr : string? <<get>> <<set>>
+    + LocationTextEn : string? <<get>> <<set>>
+    + MapUrl : string? <<get>> <<set>>
+}
+class "ICollection`1"<T> {
+}
+Artisan --> "CreatedAt" DateTime
+Artisan --> "UpdatedAt" DateTime
+Artisan o-> "ArtisanMedia<ArtisanMedia>" "ICollection`1"
+@enduml

@@ -1,0 +1,11 @@
+@startuml
+class Category {
+    + CategoryId : int <<get>> <<set>>
+    + CategoryNameAr : string <<get>> <<set>>
+    + CategoryNameEn : string <<get>> <<set>>
+}
+class "ICollection`1"<T> {
+}
+Category --> "CreatedAt" DateTime
+Category o-> "LandmarkCategories<LandmarkCategory>" "ICollection`1"
+@enduml

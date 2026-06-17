@@ -1,0 +1,10 @@
+@startuml
+class Favorite {
+    + Id : int <<get>> <<set>>
+    + UserId : int <<get>> <<set>>
+    + LandmarkId : int <<get>> <<set>>
+}
+Favorite --> "CreatedAt" DateTime
+Favorite o-> "User" User
+Favorite o-> "Landmark" Landmark
+@enduml

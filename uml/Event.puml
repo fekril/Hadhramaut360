@@ -1,0 +1,22 @@
+@startuml
+class Event {
+    + EventId : int <<get>> <<set>>
+    + OrgUserId : int <<get>> <<set>>
+    + TitleAr : string <<get>> <<set>>
+    + TitleEn : string <<get>> <<set>>
+    + DescriptionAr : string <<get>> <<set>>
+    + DescriptionEn : string <<get>> <<set>>
+    + MapUrl : string? <<get>> <<set>>
+    + AddressAr : string <<get>> <<set>>
+    + AddressEn : string <<get>> <<set>>
+    + FormUrl : string? <<get>> <<set>>
+}
+class "ICollection`1"<T> {
+}
+Event --> "StartDate" DateTime
+Event --> "EndDate" DateTime
+Event --> "CreatedAt" DateTime
+Event --> "UpdatedAt" DateTime
+Event o-> "Organization" Organization
+Event o-> "EventMedia<EventMedia>" "ICollection`1"
+@enduml

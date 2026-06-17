@@ -1,0 +1,6 @@
+@startuml
+enum MediaType {
+    Image,
+    Video,
+}
+@enduml
