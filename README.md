@@ -68,13 +68,8 @@ dotnet run
 ```
 Swagger UI is available at `/swagger`.
 
-> ⚠️ Never commit real secrets (JWT key, connection strings). Use User Secrets or environment variables.
-
 ### API Modules (Controllers)
 `Auth`, `Account`, `AdminUsers`, `Categories`, `Landmarks`, `Events`, `DiscoverContent`, `Artisans`, `CommunityPosts`, `CommunityPostReports`, `Favorites`, `Organizations`, `Dashboard`.
-
-### Author
-**Fekri** — fekrilutfy@gmail.com
 
 ---
 
@@ -144,12 +139,6 @@ dotnet run
 ```
 واجهة Swagger متاحة على المسار `/swagger`.
 
-> ⚠️ لا ترفع الأسرار الحقيقية (مفتاح JWT أو سلاسل الاتصال) إلى GitHub. استخدم User Secrets أو متغيرات البيئة.
-
 ### وحدات الـ API
 `Auth`، `Account`، `AdminUsers`، `Categories`، `Landmarks`، `Events`، `DiscoverContent`، `Artisans`، `CommunityPosts`، `CommunityPostReports`، `Favorites`، `Organizations`، `Dashboard`.
-
-### المطوّر
-**فكري** — fekrilutfy@gmail.com
-
 </div>
