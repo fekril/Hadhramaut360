@@ -1,4 +1,4 @@
-# Hadhramaut 360 — Backend API
+# Hadhramaut 360 🧭 — Backend API
 
 [English](#english) | [العربية](#arabic)
 
